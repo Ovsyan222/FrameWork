@@ -6,7 +6,7 @@
     {
         public function main()
         {
-            echo 'Главаня страница';
+            echo 'Главная страница';
         }
 
         public function sayHello(string $name)
