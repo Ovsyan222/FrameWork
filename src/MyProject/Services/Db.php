@@ -5,9 +5,19 @@
     class Db
     {
         private $pdo;
+        private static $instance;
 
-        public function __construct()
+        public static function getInstance(): self
         {
+            if (self::$instance === null) {
+                self::$instance = new self();
+            }
+            return self::$instance;
+        }
+
+        private function __construct()
+        {
+
             $dbOptions = (require __DIR__ . '/../../settings.php');
 
             $this->pdo = new \PDO(
