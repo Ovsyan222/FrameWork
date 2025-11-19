@@ -10,9 +10,9 @@
 
         public function getAuthor(): User
         {
-            return User::getBuId($this->authorId);
+            return User::getById($this->authorId);
         }
-        
+
         protected $name;
         protected $text;
         protected $authorId;
@@ -26,6 +26,16 @@
         public function getText(): string
         {
             return $this->text;
+        }
+
+        public function setName(string $name): void
+        {
+            $this->name = $name;
+        }
+
+        public function setText(string $text): void
+        {
+            $this->text = $text;
         }
 
         protected static function getTableName(): string
