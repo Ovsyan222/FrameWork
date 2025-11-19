@@ -5,4 +5,5 @@ return [
     '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
     '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
     '~^articles/add$~' => [\MyProject\Controllers\ArticlesController::class, 'add'],
+    '~^users/register$~' => [\MyProject\Controllers\UsersController::class, 'signUp'],
 ];
