@@ -22,7 +22,7 @@
 <?php endif; ?>
 
 <!-- Список комментариев -->
-<div style="margin-top: 30px;">
+<div id="comments" style="margin-top: 30px;">
     <h3>Комментарии (<?= $article->getCommentsCount() ?>)</h3>
     <?php foreach ($comments as $comment): ?>
         <div id="comment<?= $comment->getId() ?>" style="border: 1px solid #eee; padding: 15px; margin: 10px 0;">
@@ -32,11 +32,20 @@
                     (<?= $comment->getCreatedAt() ?>)
                 </span>
                 
-                <!-- Ссылка редактирования для автора комментария -->
-                <?php if (!empty($user) && $user->getId() === $comment->getAuthor()->getId()): ?>
-                    <a href="/FrameWork/www/comments/<?= $comment->getId() ?>/edit" 
-                       style="font-size: 0.8em; margin-left: 10px;">Редактировать</a>
-                <?php endif; ?>
+                <!-- Ссылки управления для автора комментария или администратора -->
+                <?php if (!empty($user) && ($user->getId() === $comment->getAuthor()->getId() || $user->getRole() === 'admin')): ?>
+    <span style="font-size: 0.8em; margin-left: 10px;">
+        <a href="/FrameWork/www/comments/<?= $comment->getId() ?>/edit">Редактировать</a>
+        |
+        <form action="/FrameWork/www/comments/<?= $comment->getId() ?>/delete" method="post" style="display: inline;">
+            <button type="submit" 
+                    onclick="return confirm('Вы уверены, что хотите удалить этот комментарий?')"
+                    style="color: red; border: none; background: none; cursor: pointer; text-decoration: underline; padding: 0; font: inherit;">
+                Удалить
+            </button>
+        </form>
+    </span>
+<?php endif; ?>
             </div>
             <div style="margin-top: 10px;">
                 <?= nl2br(htmlspecialchars($comment->getText())) ?>

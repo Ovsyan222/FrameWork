@@ -85,4 +85,30 @@ class CommentsController extends AbstractController
 
         $this->view->renderHtml('comments/edit.php', ['comment' => $comment]);
     }
+
+    public function delete(int $commentId): void
+    {
+        $comment = Comment::getById($commentId);
+        
+        if ($comment === null) {
+            throw new NotFoundException('Комментарий не найден');
+        }
+
+        if ($this->user === null) {
+            throw new UnauthorizedException('Для удаления комментария необходимо авторизоваться');
+        }
+
+        $isAuthor = $comment->getAuthor()->getId() === $this->user->getId();
+        $isAdmin = $this->user->getRole() === 'admin';
+        
+        if (!$isAuthor && !$isAdmin) {
+            throw new UnauthorizedException('Вы можете удалять только свои комментарии');
+        }
+
+        $articleId = $comment->getArticle()->getId();
+        $comment->delete();
+
+        header('Location: /FrameWork/www/articles/' . $articleId);
+        exit();
+    }
 }

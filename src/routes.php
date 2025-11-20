@@ -14,4 +14,5 @@ return [
     '~^users/signUpSuccessful$~' => [\MyProject\Controllers\UsersController::class, 'signUpSuccessful'],
     '~^articles/(\d+)/comments$~' => [\MyProject\Controllers\CommentsController::class, 'add'],
     '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
+    '~^comments/(\d+)/delete$~' => [\MyProject\Controllers\CommentsController::class, 'delete'],
 ];
