@@ -86,16 +86,9 @@
             $sql = 'INSERT INTO ' . static::getTableName() . ' (' . $columnsViaSemicolon . ') VALUES (' . $paramsNamesViaSemicolon . ');';
             $db = Db::getInstance();
             $db->query($sql, $params2values, static::class);
-        }
-
-        public function delete(): void
-        {
-            $db = Db::getInstance();
-            $db->query(
-                'DELETE FROM `' . static::getTableName() . '` WHERE id = :id;',
-                ['id' => $this->id]
-            );
-            $this->id = null;
+            
+            // Устанавливаем ID после вставки
+            $this->id = $db->getLastInsertId();
         }
 
         private function mapPropertiesToDbFormat(): array
@@ -131,6 +124,17 @@
             }
 
             return $result[0];
+        }
+
+        // Добавьте этот метод в класс
+        public static function findByColumn(string $columnName, $value): array
+        {
+            $db = Db::getInstance();
+            return $db->query(
+                'SELECT * FROM `' . static::getTableName() . '` WHERE `' . $columnName . '` = :value ORDER BY id DESC;',
+                [':value' => $value],
+                static::class
+            );
         }
     
         abstract protected static function getTableName(): string;

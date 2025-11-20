@@ -16,8 +16,10 @@
                 return;
             }
             
-            $this->view->renderHtml('articles/view.php', ['article' => $article]);
-
+            $this->view->renderHtml('articles/view.php', [
+                'article' => $article,
+                'comments' => $article->getComments()
+            ]);
         }
 
         public function edit(int $articleId): void

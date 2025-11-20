@@ -4,6 +4,8 @@ namespace MyProject\Models\Articles;
 
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
+use MyProject\Models\Comments\Comment;
+use MyProject\Services\Db;
 
 class Article extends ActiveRecordEntity
 {
@@ -53,5 +55,20 @@ class Article extends ActiveRecordEntity
     protected static function getTableName(): string
     {
         return 'articles';
+    }
+
+    public function getComments(): array
+    {
+        return Comment::findByColumn('article_id', $this->id);
+    }
+
+    public function getCommentsCount(): int
+    {
+        $db = Db::getInstance();
+        $result = $db->query(
+            'SELECT COUNT(*) as count FROM `' . Comment::getTableName() . '` WHERE article_id = :articleId;',
+            [':articleId' => $this->id]
+        );
+        return $result[0]->count ?? 0;
     }
 }
