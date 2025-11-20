@@ -99,8 +99,8 @@ class CommentsController extends AbstractController
         }
 
         $isAuthor = $comment->getAuthor()->getId() === $this->user->getId();
-        $isAdmin = $this->user->getRole() === 'admin';
-        
+        $isAdmin = $this->user->isAdmin();
+
         if (!$isAuthor && !$isAdmin) {
             throw new UnauthorizedException('Вы можете удалять только свои комментарии');
         }
@@ -110,5 +110,27 @@ class CommentsController extends AbstractController
 
         header('Location: /FrameWork/www/articles/' . $articleId);
         exit();
+    }
+
+    public function confirmDelete(int $commentId): void
+    {
+        $comment = Comment::getById($commentId);
+        
+        if ($comment === null) {
+            throw new NotFoundException('Комментарий не найден');
+        }
+
+        if ($this->user === null) {
+            throw new UnauthorizedException('Для удаления комментария необходимо авторизоваться');
+        }
+
+        $isAuthor = $comment->getAuthor()->getId() === $this->user->getId();
+        $isAdmin = $this->user->isAdmin();
+
+        if (!$isAuthor && !$isAdmin) {
+            throw new UnauthorizedException('Вы можете удалять только свои комментарии');
+        }
+
+        $this->view->renderHtml('comments/confirm_delete.php', ['comment' => $comment]);
     }
 }
