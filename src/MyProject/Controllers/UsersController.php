@@ -47,4 +47,27 @@ class UsersController extends AbstractController
     {
         $this->view->renderHtml('users/signUpSuccessful.php');
     }
+
+    public function logout()
+    {
+        if ($this->user !== null) {
+            // Очищаем authToken в базе данных (опционально)
+            $this->user->authToken = null;
+            $this->user->save();
+        }
+        
+        // Удаляем куку token
+        setcookie('token', '', [
+            'expires' => time() - 3600,
+            'path' => '/',
+            'domain' => '',
+            'secure' => false,
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+        
+        // Редирект на главную страницу
+        header('Location: /FrameWork/www/');
+        exit();
+    }
 }

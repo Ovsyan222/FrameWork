@@ -1,17 +1,10 @@
-</td>
-            <td width="300px" class="sidebar">
-                <div class="sidebarHeader">Меню</div>
-                <ul>
-                    <li><a href="/FrameWork/www/">Главная страница</a></li>
-                    <li><a href="/about-me">Обо мне</a></li>
-                    <li><a href="/FrameWork/www/users/login">Авторизация</a></li>
-                    <li><a href="/FrameWork/www/users/register">Регистрация</a></li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td class="footer" colspan="2">Все права защищены (c) Мой блог</td>
-        </tr>
-    </table>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Все права защищены (c) Мой блог</p>
+        </div>
+    </footer>
 </body>
 </html>

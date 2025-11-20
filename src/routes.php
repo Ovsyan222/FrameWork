@@ -14,5 +14,6 @@ return [
     '~^comments/(\d+)/edit$~' => [\MyProject\Controllers\CommentsController::class, 'edit'],
     '~^comments/(\d+)/delete$~' => [\MyProject\Controllers\CommentsController::class, 'delete'],
     '~^articles/(\d+)/delete$~' => [\MyProject\Controllers\ArticlesController::class, 'delete'],
+    '~^users/logout$~' => [\MyProject\Controllers\UsersController::class, 'logout'],
     '~^comments/(\d+)/confirm-delete$~' => [\MyProject\Controllers\CommentsController::class, 'confirmDelete'],
 ];
